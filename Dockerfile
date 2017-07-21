@@ -36,7 +36,7 @@ RUN pip3 install -r /src/server/requirements.txt
 COPY server/ /src/server/
 
 # Run collectstatic to build Django static assets
-# Set secret key to something so the command runs witout balking at no key set.
+# Set secret key to something so the command runs without balking at no key set.
 RUN SECRET_KEY='x' python3 /src/server/manage.py collectstatic --no-input
 
 EXPOSE 80
