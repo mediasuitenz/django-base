@@ -7,7 +7,6 @@ MAINTAINER Media Suite
 # Last step upgrades pip (using pip) to the latest version.
 RUN \
   apt-get update && \
-  apt-get upgrade -y && \
   apt-get install -y \
     python3 \
     python3-pip \
@@ -15,16 +14,14 @@ RUN \
     supervisor \
     && \
   rm -rf /var/lib/apt/lists/* && \
-  pip3 install -U pip
-
-# Deployment specific packages
-RUN pip3 install uwsgi
+  pip3 install -U pip && \
+  pip3 install uwsgi
 
 # Configuration
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-COPY deploy/nginx-app.conf /etc/nginx/sites-available/default
-COPY deploy/supervisor-app.conf /etc/supervisor/conf.d/
-COPY deploy/uwsgi.ini /src/
+COPY docker-config/nginx-app.conf /etc/nginx/sites-available/default
+COPY docker-config/supervisor-app.conf /etc/supervisor/conf.d/
+COPY docker-config/uwsgi.ini /src/
 
 # Project specific packages
 # Do the requirements.txt copy earlier than the rest of the code to let Docker
