@@ -49,7 +49,7 @@ Add to end of file
 
 ### 4. Update deployment files
 
-Edit `deploy/uwsgi.ini` and change `<project_name>` in the module setting to the
+Edit `docker-config/uwsgi.ini` and change `<project_name>` in the module setting to the
 name of the project created above by `django-admin`.
 
 ### 5. Setup .env file
