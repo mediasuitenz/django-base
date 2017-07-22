@@ -47,6 +47,29 @@ to
 Add to end of file
 `STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')`.
 
+Replace the database block:
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
+with:
+```
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.postgresql',
+      'NAME': os.environ.get('PG_DB'),
+      'USER': os.environ.get('PG_USER'),
+      'PASSWORD': os.environ.get('PG_PASS'),
+      'HOST': os.environ.get('PG_HOST'),
+      'PORT': os.environ.get('PG_PORT', '5432'),
+  }
+}
+```
+
 ### 4. Update deployment files
 
 Edit `docker-config/uwsgi.ini` and change `<project_name>` in the module setting to the
@@ -56,6 +79,8 @@ name of the project created above by `django-admin`.
 
 Copy `.env-example` to `.env` and run `scripts/keygen.py` to generate a value
 for the `SECRET_KEY` setting.
+
+Modify the database settings to your Postgresql instance.
 
 Update `server/manage.py` and add the following block near the top:
 ```
